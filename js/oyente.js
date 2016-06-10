@@ -2,6 +2,7 @@
 function Oyente(canvas) {
   Tablero.call(this,canvas);
   this.activo = false;
+  this.tecla = null;
 
   this.escucharTeclado = function() {
     window.addEventListener("keydown",this.apretarTecla,false);
@@ -22,19 +23,41 @@ function Oyente(canvas) {
     var cvs = "canvas";
 
     if(!o.activo) {
-      // this.activo = inteligencia.opuesto(this.activo);
-      var c = new Circulo(cvs,3,new Punto(cvs,u.x,u.y));
-      c.color = "red";
-      obj.insertar(c);
+      // Dibuja la linea.
+      if(o.tecla == 76) {
+        var c = new Circulo(cvs,3,new Punto(cvs,u.x,u.y));
+        c.color = "red";
+        obj.insertar(c);
 
-      var l = new Linea(cvs,new Punto(cvs,u.x,u.y),new Punto(cvs,this.mousePosX,this.mousePosY));
-      l.color = "blue";
-      obj.insertar(l);
+        var l = new Linea(cvs,new Punto(cvs,u.x,u.y),new Punto(cvs,this.mousePosX,this.mousePosY));
+        l.color = "blue";
+        obj.insertar(l);
+        o.activo = inteligencia.opuesto(o.activo);
+      }
+      // Dibuja el rectangulo.
+      else if(o.tecla == 82) {
+        var c = new Circulo(cvs,3,new Punto(cvs,u.x,u.y));
+        c.color = "red";
+        obj.insertar(c);
+
+        var l = new Rectangulo(cvs,new Punto(cvs,u.x,u.y),this.mousePosX,this.mousePosY);
+        l.color = "blue";
+        obj.insertar(l);
+        o.activo = inteligencia.opuesto(o.activo);
+      }
     }
     else {
       var l = obj.objetos[obj.cant - 1];
-      l.obtenerPF().establecerX(u.x);
-      l.obtenerPF().establecerY(u.y);
+      // Linea.
+      if(o.tecla == 76){
+        l.obtenerPF().establecerX(u.x);
+        l.obtenerPF().establecerY(u.y);
+      }
+      // Rectangulo.
+      else {
+        l.establecerLongitud(u.x - l.obtenerPI().obtenerX());
+        l.establecerAltura(u.y - l.obtenerPI().obtenerY());
+      }
 
       var c = new Circulo(cvs,3,new Punto(cvs,u.x,u.y));
       c.color = "red";
@@ -43,34 +66,45 @@ function Oyente(canvas) {
 
       tablero.limpiar();
       obj.dibujarTodo();
+      o.activo = inteligencia.opuesto(o.activo);
     }
-    o.activo = inteligencia.opuesto(o.activo);
 
   }
   this.movMouse = function(event) {
-    this.mousePosX = event.clientX;
-    this.mousePosY = event.clientY;
+    var mousePosX = event.clientX;
+    var mousePosY = event.clientY;
 
     // Movimiento de la linea.
     if(o.activo) {
       var l = obj.objetos[obj.cant - 1];
-      l.obtenerPF().establecerX(this.mousePosX - 10);
-      l.obtenerPF().establecerY(this.mousePosY - 10);
+      if(o.tecla == 76) {
+        l.obtenerPF().establecerX(mousePosX - 10);
+        l.obtenerPF().establecerY(mousePosY - 10);
+      }
+      else {
+        l.establecerLongitud(mousePosX - 10 - l.obtenerPI().obtenerX());
+        l.establecerAltura(mousePosY - 10 - l.obtenerPI().obtenerY());
+      }
+
+      var p = inteligencia.reubicar(mousePosX,mousePosY);
+      tablero.limpiar();
+      obj.dibujarOpt(p.x/10 - 20,p.y/10 - 20,p.x/10 + 20,p.y/10 + 20);
     }
   }
   // Este metodo todavia no esta implementado.
   this.apretarTecla = function(event) {
-    // w
-    if(event.keyCode==87) {
+    console.log(event.keyCode);
+    // tecla: l
+    if(event.keyCode==76) {
+      o.tecla = 76;
     }
-    // s
-    else if(event.keyCode==83) {
+    // tecla: r
+    else if(event.keyCode==82) {
+      o.tecla = 82;
     }
-    // a
-    else if(event.keyCode==65) {
-    }
-    // d
-    else if( event.keyCode==68) {
+    // tecla: Esc
+    else if(event.keyCode==27) {
+      o.tecla = 27;
     }
   }
 }
