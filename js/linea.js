@@ -1,11 +1,9 @@
-/*
-No implemente el movimiento.
-*/
 
 function Linea(canvas,pi,pf) {
   Tablero.call(this,canvas);
   this.puntoI = pi;
   this.puntoF = pf;
+  this.color = "black";
 
   this.establecerPI = function(pi) {
     this.puntoI = pi;
@@ -15,6 +13,7 @@ function Linea(canvas,pi,pf) {
   }
   this.dibujar = function() {
     this.lienzo.beginPath();
+    this.lienzo.strokeStyle = this.color;
     this.lienzo.moveTo(this.puntoI.obtenerX(), this.puntoI.obtenerY());
     this.lienzo.lineTo(this.puntoF.obtenerX(), this.puntoF.obtenerY());
     this.lienzo.stroke();

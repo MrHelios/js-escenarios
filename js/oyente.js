@@ -1,11 +1,7 @@
 // Agregar Herencia de Tablero.
 function Oyente(canvas) {
   Tablero.call(this,canvas);
-  this.mousePosX = 0;
-  this.mousePosY = 0;
-
-  this.mouseClickX = 0;
-  this.mouseClickY = 0;
+  this.activo = false;
 
   this.escucharTeclado = function() {
     window.addEventListener("keydown",this.apretarTecla,false);
@@ -23,16 +19,46 @@ function Oyente(canvas) {
 
   this.click = function(event) {
     var u = inteligencia.reubicar(event.x - 10,event.y - 10);
-    var cvs = this.ID;
+    var cvs = "canvas";
 
-    var c = new Circulo("canvas",3,new Punto("canvas",u.x,u.y));
-    c.color = "red";
-    c.dibujar();
+    if(!o.activo) {
+      // this.activo = inteligencia.opuesto(this.activo);
+      var c = new Circulo(cvs,3,new Punto(cvs,u.x,u.y));
+      c.color = "red";
+      obj.insertar(c);
+
+      var l = new Linea(cvs,new Punto(cvs,u.x,u.y),new Punto(cvs,this.mousePosX,this.mousePosY));
+      l.color = "blue";
+      obj.insertar(l);
+    }
+    else {
+      var l = obj.objetos[obj.cant - 1];
+      l.obtenerPF().establecerX(u.x);
+      l.obtenerPF().establecerY(u.y);
+
+      var c = new Circulo(cvs,3,new Punto(cvs,u.x,u.y));
+      c.color = "red";
+      obj.insertar(c);
+      c = obj.objetos[obj.cant - 1];
+
+      tablero.limpiar();
+      obj.dibujarTodo();
+    }
+    o.activo = inteligencia.opuesto(o.activo);
+
   }
   this.movMouse = function(event) {
     this.mousePosX = event.clientX;
     this.mousePosY = event.clientY;
+
+    // Movimiento de la linea.
+    if(o.activo) {
+      var l = obj.objetos[obj.cant - 1];
+      l.obtenerPF().establecerX(this.mousePosX - 10);
+      l.obtenerPF().establecerY(this.mousePosY - 10);
+    }
   }
+  // Este metodo todavia no esta implementado.
   this.apretarTecla = function(event) {
     // w
     if(event.keyCode==87) {

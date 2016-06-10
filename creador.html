@@ -18,27 +18,38 @@
   <script src="js/monitor.js"></script>
   <script src="js/oyente.js"></script>
   <script src="js/escenario.js"></script>
-
   <script src="js/ia.js"></script>
 
+  <script src="js/actualizador.js"></script>
+  <script src="js/coleccion.js"></script>
+
   <script type="text/javascript">
+  var activo = false;
   var cvs = "canvas";
   var tablero = new Tablero(cvs);
   var escenario = new Escenario(cvs);
+  var obj = new Coleccion(5000);
 
   // Grilla para crear laberintos.
   for(var i=1; i<escenario.fila()/2; i++){
     for(var j=1; j<escenario.columna()/2; j++){
       var punto = new Punto(cvs,i*10,j*10);
-      var circulo = new Circulo(cvs,1,punto);
-      circulo.dibujar();
+      escenario.establecerPos(i,j,new Circulo(cvs,1,punto));
+      obj.insertar(escenario.obtenerPos(i,j));
     }
   }
 
   var o = new Oyente(cvs);
+  o.detectorMovMouse();
   o.escucharMouse();
 
   var inteligencia = new IA();
+
+  // Solo se ejecuta en la inicializacion.
+  obj.dibujarTodo();
+
+  Actualizador();
+
   </script>
 </body>
 </html>
