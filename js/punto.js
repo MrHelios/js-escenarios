@@ -1,4 +1,3 @@
-
 function Punto(canvas,x,y) {
   // Constructor.
   Tablero.call(this, canvas);
@@ -21,10 +20,3 @@ function Punto(canvas,x,y) {
     return (this.x == p.obtenerX() && this.y == p.obtenerY());
   }
 }
-
-/*
-Como debe hacerse herencia. INVESTIGAR MAS.
-
-Punto.prototype = Object.create(Tablero.prototype);
-Punto.prototype.constructor = Punto;
-*/

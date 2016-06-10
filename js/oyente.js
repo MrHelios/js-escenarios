@@ -1,49 +1,50 @@
+// Agregar Herencia de Tablero.
+function Oyente(canvas) {
+  Tablero.call(this,canvas);
+  this.mousePosX = 0;
+  this.mousePosY = 0;
 
-function Oyente() {
+  this.mouseClickX = 0;
+  this.mouseClickY = 0;
+
   this.escucharTeclado = function() {
     window.addEventListener("keydown",this.apretarTecla,false);
   }
-  this.apretarTecla = function(event) {
-    // Evento para detectar tecla.
-    // w
-    if(event.keyCode==87 && serpiente.obtenerPos(0).obtenerVX()!=0) {
-      serpiente.obtenerPos(0).giro = true;
-      temp = serpiente.obtenerPos(0).obtenerPI().clone();
-      y = serpiente.obtenerPos(0).obtenerPI().obtenerY();
+  // Movimiento del mouse.
+  this.detectorMovMouse = function() {
+    var canvas = document.getElementById(this.ID);
+    canvas.addEventListener("mousemove", this.movMouse,false);
+  }
+  // Click del mouse.
+  this.escucharMouse = function() {
+    var canvas = document.getElementById(this.ID);
+    canvas.addEventListener("mousedown",this.click,false);
+  }
 
-      serpiente.obtenerPos(0).obtenerPI().establecerY(y-5);
-      serpiente.obtenerPos(0).establecerPF(temp);
-      serpiente.obtenerPos(0).establecerVY(-5);
+  this.click = function(event) {
+    var u = inteligencia.reubicar(event.x - 10,event.y - 10);
+    var cvs = this.ID;
+
+    var c = new Circulo("canvas",3,new Punto("canvas",u.x,u.y));
+    c.color = "red";
+    c.dibujar();
+  }
+  this.movMouse = function(event) {
+    this.mousePosX = event.clientX;
+    this.mousePosY = event.clientY;
+  }
+  this.apretarTecla = function(event) {
+    // w
+    if(event.keyCode==87) {
     }
     // s
-    else if(event.keyCode==83 && serpiente.obtenerPos(0).obtenerVX()!=0) {
-      serpiente.obtenerPos(0).giro = true;
-      temp = serpiente.obtenerPos(0).obtenerPI().clone();
-      y = serpiente.obtenerPos(0).obtenerPI().obtenerY();
-
-      serpiente.obtenerPos(0).obtenerPI().establecerY(y+5);
-      serpiente.obtenerPos(0).establecerPF(temp);
-      serpiente.obtenerPos(0).establecerVY(5);
+    else if(event.keyCode==83) {
     }
     // a
-    else if( event.keyCode==65 && serpiente.obtenerPos(0).obtenerVY()!=0) {
-      serpiente.obtenerPos(0).giro = true;
-      temp = serpiente.obtenerPos(0).obtenerPI().clone();
-      x = serpiente.obtenerPos(0).obtenerPI().obtenerX();
-
-      serpiente.obtenerPos(0).obtenerPI().establecerX(x-5);
-      serpiente.obtenerPos(0).establecerPF(temp);
-      serpiente.obtenerPos(0).establecerVX(-5);
+    else if(event.keyCode==65) {
     }
     // d
-    else if( event.keyCode==68 && serpiente.obtenerPos(0).obtenerVY()!=0) {
-      serpiente.obtenerPos(0).giro = true;
-      temp = serpiente.obtenerPos(0).obtenerPI().clone();
-      x = serpiente.obtenerPos(0).obtenerPI().obtenerX();
-
-      serpiente.obtenerPos(0).obtenerPI().establecerX(x+5);
-      serpiente.obtenerPos(0).establecerPF(temp);
-      serpiente.obtenerPos(0).establecerVX(5);
+    else if( event.keyCode==68) {
     }
   }
 }
