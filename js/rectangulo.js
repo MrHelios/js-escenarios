@@ -27,5 +27,10 @@ function Rectangulo(canvas,pi,l,h) {
   this.clone = function() {
     return new Rectangulo(this.ID,this.puntoI.clone(),this.longitud,this.altura);
   }
+  this.equals = function(rect) {
+    return (this.puntoI.equals(rect.obtenerPI()) &&
+            this.longitud == rect.obtenerLongitud() &&
+            this.altura == rect.obtenerAltura());
+  }
 
 }

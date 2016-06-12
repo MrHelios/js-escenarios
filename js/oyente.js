@@ -22,6 +22,7 @@ function Oyente(canvas) {
     var u = inteligencia.reubicar(event.x - 10,event.y - 10);
     var cvs = "canvas";
 
+    // Verifica si has hecho un click.
     if(!o.activo) {
       // Dibuja la linea.
       if(o.tecla == 76) {
@@ -105,6 +106,15 @@ function Oyente(canvas) {
     // tecla: Esc
     else if(event.keyCode==27) {
       o.tecla = 27;
+
+      if(o.activo) {        
+        // Elimina el ultimo.
+        for(var i=0; i<2;i++) obj.eliminar(obj.objetos[obj.cant - 1]);
+
+        o.activo = inteligencia.opuesto(o.activo);
+        tablero.limpiar();
+        obj.dibujarTodo();
+      }
     }
   }
 }

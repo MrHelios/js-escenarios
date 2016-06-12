@@ -24,5 +24,9 @@ function Linea(canvas,pi,pf) {
   this.clone = function() {
     return new Linea(this.ID,this.puntoI.clone(),this.puntoF.clone());
   }
+  this.equals = function(l) {
+    return (this.puntoI.equals(l.obtenerPI()) &&
+            this.puntoF.equals(l.obtenerPF()));
+  }
 
 }

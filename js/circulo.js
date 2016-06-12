@@ -20,6 +20,10 @@ function Circulo(canvas,r,c) {
 
   this.obtenerCentro = function() { return this.centro;}
   this.obtenerRadio = function() { return this.radio;}
+  this.equals = function(c) {
+    return ( this.centro.equals(c.obtenerCentro()) &&
+             this.radio == c.obtenerRadio());
+  }
   this.clone = function() {
     return new Circulo(this.ID,this.radio,this.centro.clone());
   }
