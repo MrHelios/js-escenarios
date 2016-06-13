@@ -2,13 +2,17 @@
 <head>
   <title>Creador Laberinto para Serpiente</title>
   <style>
-  #canvas{
-    border: solid 1px;
+  html, body {
+    margin: 0px;
+  }
+
+  canvas {
+    margin: 0px;
   }
   </style>
 </head>
 <body>
-  <canvas id="canvas" width="600" height="600">
+  <canvas id="canvas" width="1000" height="600">
   </canvas>
 
   <script src="js/tablero.js"></script>
@@ -20,23 +24,19 @@
   <script src="js/escenario.js"></script>
   <script src="js/ia.js"></script>
   <script src="js/coleccion.js"></script>
-
   <script src="js/rectangulo.js"></script>
 
   <script type="text/javascript">
+  // Variables que trabajaran en la mesa.
+
   var activo = false;
   var cvs = "canvas";
   var tablero = new Tablero(cvs);
   var escenario = new Escenario(cvs);
-  var obj = new Coleccion(5000);
+  var obj = new Coleccion(100);
 
-  // Grilla para crear laberintos.
-  for(var i=1; i<escenario.fila(); i++){
-    for(var j=1; j<escenario.columna(); j++){
-      var punto = new Punto(cvs,i*10,j*10);
-      escenario.establecerPos(i,j,new Circulo(cvs,1,punto));
-    }
-  }
+  escenario.establecerGrilla();
+  obj.insertar(escenario.obtenerLimites());
   obj.insertar(escenario);
 
   var o = new Oyente(cvs);
@@ -46,9 +46,9 @@
 
   var inteligencia = new IA();
 
-  // Solo se ejecuta en la inicializacion.
-  obj.dibujarTodo();  
-
+  // Solo se ejecuta en la inicializacion.  
+  obj.dibujarTodo();
   </script>
+
 </body>
 </html>

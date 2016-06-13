@@ -23,7 +23,7 @@ function Oyente(canvas) {
     var cvs = "canvas";
 
     // Verifica si has hecho un click.
-    if(!o.activo) {
+    if(!o.activo && escenario.estaEnEscenario(u.x,u.y)) {
       // Dibuja la linea.
       if(o.tecla == 76) {
         var c = new Circulo(cvs,3,new Punto(cvs,u.x,u.y));
@@ -47,7 +47,7 @@ function Oyente(canvas) {
         o.activo = inteligencia.opuesto(o.activo);
       }
     }
-    else {
+    else if(escenario.estaEnEscenario(u.x,u.y)) {
       var l = obj.objetos[obj.cant - 1];
       // Linea.
       if(o.tecla == 76){
@@ -89,7 +89,8 @@ function Oyente(canvas) {
 
       var p = inteligencia.reubicar(mousePosX,mousePosY);
       tablero.limpiar();
-      obj.dibujarOpt(p.x/10 - 20,p.y/10 - 20,p.x/10 + 20,p.y/10 + 20);
+      if( escenario.estaEnEscenario(p.x,p.y)) obj.dibujarOpt(p.x/10 - 20,p.y/10 - 20,p.x/10 + 20,p.y/10 + 20);
+      else obj.dibujarTodo();
     }
   }
   // Este metodo todavia no esta implementado.
@@ -107,7 +108,7 @@ function Oyente(canvas) {
     else if(event.keyCode==27) {
       o.tecla = 27;
 
-      if(o.activo) {        
+      if(o.activo) {
         // Elimina el ultimo.
         for(var i=0; i<2;i++) obj.eliminar(obj.objetos[obj.cant - 1]);
 
