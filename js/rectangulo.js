@@ -20,6 +20,12 @@ function Rectangulo(canvas,pi,l,h) {
     this.lienzo.rect(this.puntoI.obtenerX(),this.puntoI.obtenerY(),this.longitud,this.altura);
     this.lienzo.stroke();
   }
+  this.pintar = function() {
+    this.lienzo.beginPath();
+    this.lienzo.fillStyle = this.color;
+    this.lienzo.rect(this.puntoI.obtenerX(),this.puntoI.obtenerY(),this.longitud,this.altura);
+    this.lienzo.fill();
+  }
 
   this.obtenerPI = function() { return this.puntoI;}
   this.obtenerLongitud = function() { return this.longitud;}

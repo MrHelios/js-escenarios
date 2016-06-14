@@ -21,19 +21,26 @@
   <script src="js/linea.js"></script>
   <script src="js/monitor.js"></script>
   <script src="js/oyente.js"></script>
-  <script src="js/escenario.js"></script>
   <script src="js/ia.js"></script>
   <script src="js/coleccion.js"></script>
   <script src="js/rectangulo.js"></script>
 
-  <script type="text/javascript">
-  // Variables que trabajaran en la mesa.
+  <script src="js/area.js"></script>
+  <script src="js/menu-objetos.js"></script>
+  <script src="js/escenario.js"></script>
 
+  <script type="text/javascript">
   var activo = false;
   var cvs = "canvas";
   var tablero = new Tablero(cvs);
   var escenario = new Escenario(cvs);
   var obj = new Coleccion(100);
+
+  var monitor_objetos = new MenuObjetos(cvs);
+  // Personalizo las medidas del menu.
+  monitor_objetos.establecerFila(140);
+  monitor_objetos.establecerColumna_Inicio(40);
+  monitor_objetos.establecerColumna(800);
 
   escenario.establecerGrilla();
   obj.insertar(escenario.obtenerLimites());
@@ -46,8 +53,9 @@
 
   var inteligencia = new IA();
 
-  // Solo se ejecuta en la inicializacion.  
+  // Solo se ejecuta en la inicializacion.
   obj.dibujarTodo();
+  monitor_objetos.pintar();
   </script>
 
 </body>

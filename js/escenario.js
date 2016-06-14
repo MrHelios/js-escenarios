@@ -1,7 +1,6 @@
-function Escenario(canvas) {
-  Tablero.call(this,canvas);
+function Escenario(cvs) {
+  Area.call(this,cvs);
 
-  this.multiplicador = 10;
   this.fila_inicio = 15;
   this.columna_inicio = 5;
   this.fila = this.obtenerLong()/this.multiplicador;
@@ -19,10 +18,7 @@ function Escenario(canvas) {
 
   this.establecerPos = function(i,j,obj) {
     this.grilla[i][j] = obj;
-  }
-  this.establecerMultiplicador = function(m) {
-    this.multiplicador = m;
-  }
+  }  
   this.dibujar = function() {
     for(var i=this.fila_inicio; i<this.fila; i++) {
       for(var j=this.columna_inicio; j<this.columna; j++) {
@@ -56,12 +52,5 @@ function Escenario(canvas) {
   }
 
   this.obtenerPos = function(i,j) { return this.grilla[i][j];}
-  this.obtenerFila = function() { return this.obtenerLong()/this.multiplicador;}
-  this.obtenerColumna = function() { return this.obtenerAltura()/this.multiplicador;}
-  this.obtenerMultiplicador = function() { return this.multiplicador;}
   this.obtenerLimites = function() { return this.limites;}
-  this.estaEnEscenario = function(px,py) {
-    return (this.fila_inicio*10<=px && this.fila*10>px && this.columna_inicio*10<=py && this.columna*10>py)
-  }
-
 }
