@@ -19,7 +19,7 @@ function Oyente(canvas) {
   }
 
   this.click = function(event) {
-    var u = inteligencia.reubicar(event.x - 10,event.y - 10);
+    var u = inteligencia.reubicar(event.x,event.y);
     var cvs = "canvas";
 
     // Verifica si has hecho un click.
@@ -49,16 +49,19 @@ function Oyente(canvas) {
     }
     else if(escenario.estaEnEscenario(u.x,u.y)) {
       var l = obj.objetos[obj.cant - 1];
-      // Linea.
+      // Creacion Linea.
       if(o.tecla == 76){
         l.obtenerPF().establecerX(u.x);
         l.obtenerPF().establecerY(u.y);
+
       }
-      // Rectangulo.
+      // Creacion Rectangulo.
       else {
         l.establecerLongitud(u.x - l.obtenerPI().obtenerX());
         l.establecerAltura(u.y - l.obtenerPI().obtenerY());
       }
+      // Creacion del acceso directo.
+      monitor_obj.insertar(enlace_obj.crearEnlace(l));
 
       var c = new Circulo(cvs,3,new Punto(cvs,u.x,u.y));
       c.color = "red";
@@ -66,6 +69,7 @@ function Oyente(canvas) {
       c = obj.objetos[obj.cant - 1];
 
       tablero.limpiar();
+      monitor_obj.dibujarTodo();
       obj.dibujarTodo();
       o.activo = inteligencia.opuesto(o.activo);
     }
@@ -79,18 +83,21 @@ function Oyente(canvas) {
     if(o.activo) {
       var l = obj.objetos[obj.cant - 1];
       if(o.tecla == 76) {
-        l.obtenerPF().establecerX(mousePosX - 10);
-        l.obtenerPF().establecerY(mousePosY - 10);
+        l.obtenerPF().establecerX(mousePosX);
+        l.obtenerPF().establecerY(mousePosY);
       }
       else {
-        l.establecerLongitud(mousePosX - 10 - l.obtenerPI().obtenerX());
-        l.establecerAltura(mousePosY - 10 - l.obtenerPI().obtenerY());
+        l.establecerLongitud(mousePosX - l.obtenerPI().obtenerX());
+        l.establecerAltura(mousePosY - l.obtenerPI().obtenerY());
       }
 
       var p = inteligencia.reubicar(mousePosX,mousePosY);
       tablero.limpiar();
       if( escenario.estaEnEscenario(p.x,p.y)) obj.dibujarOpt(p.x/10 - 20,p.y/10 - 20,p.x/10 + 20,p.y/10 + 20);
-      else obj.dibujarTodo();
+      else {
+        monitor_obj.dibujarTodo();
+        obj.dibujarTodo();
+      }
     }
   }
   // Este metodo todavia no esta implementado.
@@ -114,6 +121,7 @@ function Oyente(canvas) {
 
         o.activo = inteligencia.opuesto(o.activo);
         tablero.limpiar();
+        monitor_obj.dibujarTodo();
         obj.dibujarTodo();
       }
     }

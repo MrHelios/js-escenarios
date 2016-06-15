@@ -27,6 +27,8 @@ function Area(canvas) {
     this.columna_inicio = c;
   }
 
+  this.obtenerFila_Inicio = function() { return this.fila_inicio;}
+  this.obtenerColumna_Inicio = function() { return this.columna_inicio;}
   this.obtenerFila = function() { return this.obtenerLong()/this.multiplicador;}
   this.obtenerColumna = function() { return this.obtenerAltura()/this.multiplicador;}
   this.obtenerMultiplicador = function() { return this.multiplicador;}
