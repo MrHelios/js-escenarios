@@ -62,6 +62,7 @@ function Oyente(canvas) {
       }
       // Creacion del acceso directo.
       monitor_obj.insertar(enlace_obj.crearEnlace(l));
+      monitor_obj.objetos[monitor_obj.cant-1].rectangulo.color = monitor_obj.objetos[monitor_obj.cant-1].color;
 
       var c = new Circulo(cvs,3,new Punto(cvs,u.x,u.y));
       c.color = "red";
@@ -72,6 +73,28 @@ function Oyente(canvas) {
       monitor_obj.dibujarTodo();
       obj.dibujarTodo();
       o.activo = inteligencia.opuesto(o.activo);
+    }
+    // Cuando se hace click en el monitor_objetos.
+    else if(monitor_objetos.estaEnEscenario(event.x,event.y)) {
+      var i=0;
+      var encontrado=false;
+      var px = event.x; var py = event.y;
+
+      while(i<monitor_obj.cant && !encontrado) {
+        var pix = monitor_obj.objetos[i].rectangulo.obtenerPI().obtenerX();
+        var piy = monitor_obj.objetos[i].rectangulo.obtenerPI().obtenerY();
+        var pfx = monitor_obj.objetos[i].rectangulo.obtenerLongitud() + pix;
+        var pfy = monitor_obj.objetos[i].rectangulo.obtenerAltura() + piy;
+        if (pix<=px && pfx>px && piy<=py && pfy>py) encontrado = true;
+        else i++;
+      }
+
+      if(encontrado) {
+        monitor_obj.objetos[i].rectangulo.color = monitor_obj.objetos[i].colorSeleccion;
+        monitor_objetos.pintar();
+        monitor_obj.dibujarTodo();
+        monitor_obj.objetos[i].rectangulo.color = monitor_obj.objetos[i].color;
+      }
     }
 
   }

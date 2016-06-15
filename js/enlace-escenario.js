@@ -6,6 +6,8 @@ function enlaceEscenario(cvs,p,i) {
   this.altura = 30;
   this.rectangulo = new Rectangulo(cvs, p, this.longitud, this.altura);
   this.info = i;
+  this.color = "rgb(204,204,204)"
+  this.colorSeleccion = "red";
 
   this.establecerPunto = function(p) {
     this.punto = p;

@@ -2,7 +2,7 @@ function Escenario(cvs) {
   Area.call(this,cvs);
 
   this.fila_inicio = 15;
-  this.columna_inicio = 5;
+  this.columna_inicio = 6;
   this.fila = this.obtenerLong()/this.multiplicador;
   this.columna = this.obtenerAltura()/this.multiplicador;
 
@@ -18,7 +18,7 @@ function Escenario(cvs) {
 
   this.establecerPos = function(i,j,obj) {
     this.grilla[i][j] = obj;
-  }  
+  }
   this.dibujar = function() {
     for(var i=this.fila_inicio; i<this.fila; i++) {
       for(var j=this.columna_inicio; j<this.columna; j++) {

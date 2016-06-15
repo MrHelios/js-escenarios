@@ -2,8 +2,10 @@
 <head>
   <title>Creador Laberinto para Serpiente</title>
   <style>
-  html, body {
+  html, body, .main {
     margin: 0px;
+    padding: 0px;
+    overflow: hidden;
   }
 
   canvas {
@@ -12,6 +14,7 @@
   </style>
 </head>
 <body>
+  <div class="main">
   <canvas id="canvas" width="1000" height="600">
   </canvas>
 
@@ -40,7 +43,7 @@
 
   var monitor_objetos = new MenuObjetos(cvs);
   // Personalizo las medidas del menu.
-  monitor_objetos.establecerFila(140);
+  monitor_objetos.establecerFila(138);
   monitor_objetos.establecerColumna_Inicio(40);
   monitor_objetos.establecerColumna(800);
 
@@ -63,6 +66,6 @@
   // Solo se ejecuta en la inicializacion.
   obj.dibujarTodo();
   </script>
-
+  </div>
 </body>
 </html>
