@@ -23,7 +23,7 @@ function IA() {
 
   // Si esta en el tablero de dibujo debe analizarse si ya hubo un click.
   this.permitirDibujo = function(escenario, estado_click, x, y) {
-    var puede;    
+    var puede;
 
     if( escenario.estaEnEscenario(x,y) && !estado_click ) puede = true;
     else puede = false;
@@ -101,7 +101,21 @@ function IA() {
     return i;
   }
 
-  this.dibujarEnlace = function(coleccion,monitor,i) {
+  this.obtenerObjetoEnlace = function(coleccion_monitor,coleccion_obj,pos) {
+    var i=0, instancias = [Rectangulo,Punto,Circulo,Linea];
+    var encontrado=false, posicion_objeto = -1;
+    var tipo_monitor = coleccion_monitor.tipoInstancia(coleccion_monitor.objetos[pos].info);
+
+    while(i<coleccion_obj.cant && !encontrado) {
+      if(coleccion_obj.objetos[i] instanceof instancias[tipo_monitor] && coleccion_obj.objetos[i].equals(coleccion_monitor.objetos[pos].info)) {
+        posicion_objeto = i;
+      }
+      i++;
+    }
+    return posicion_objeto;
+  }
+
+  this.pintarSeleccion = function(coleccion,monitor,i) {
     coleccion.objetos[i].rectangulo.color = coleccion.objetos[i].colorSeleccion;
     monitor.pintar();
     coleccion.dibujarTodo();

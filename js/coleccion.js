@@ -6,12 +6,12 @@ function Coleccion(max) {
     this.objetos[this.cant] = o;
     this.cant++;
   }
-  this.eliminar = function(obj) {
-    var encontrado = false;
-    var instancias = [Rectangulo,Punto,Circulo,Linea];
-    var i=0,qInstancia=0;
 
-    // Primero busco la instancia del objeto.
+  this.tipoInstancia = function(obj) {
+    var instancias = [Rectangulo,Punto,Circulo,Linea,Escenario];
+    var encontrado = false;
+    var i=0;
+
     while(i<instancias.length && !encontrado){
       if(obj instanceof instancias[i]) {
         encontrado=true;
@@ -19,8 +19,19 @@ function Coleccion(max) {
       }
       i++;
     }
-    encontrado = false;
-    i=0;
+
+    if(!encontrado) qInstancia=-1;
+    return qInstancia;
+  }
+
+  this.eliminar = function(obj) {
+    var instancias = [Rectangulo,Punto,Circulo,Linea];
+    // Busco que tipo de instancia es.
+    var qInstancia = this.tipoInstancia(obj);
+    var encontrado = false;
+    var i=0;
+
+    if(qInstancia == -1) encontrado=true;
 
     // Luego busco el objeto.
     while(i<this.cant && !encontrado) {
@@ -36,6 +47,7 @@ function Coleccion(max) {
       }
       i++;
     }
+    console.log(encontrado);
   }
 
   this.dibujarTodo = function() {

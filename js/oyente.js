@@ -5,8 +5,6 @@ function Oyente(canvas) {
   this.tecla = null;
   this.movmousex = 0;
   this.movmousey = 0;
-  this.clickmousex = 0;
-  this.clickmousey = 0;
   // Importante para no perder el scope.
   var self = this;
 
@@ -45,9 +43,26 @@ function Oyente(canvas) {
     // Esto se realiza en el area-monitor.
     else if(inteligencia.permitirDibujo(monitor_objetos,self.activo,u.x,u.y)) {
       var i = inteligencia.seleccionEnlace(monitor_obj,event.x,event.y);
+      var dir;
       if(i != -1){
-        inteligencia.dibujarEnlace(monitor_obj,monitor_objetos,i);
-      };
+        dir = inteligencia.obtenerObjetoEnlace(monitor_obj,obj,i);
+        if(seleccion_objeto == -1) {
+          inteligencia.pintarSeleccion(monitor_obj,monitor_objetos,i);
+          obj.objetos[dir].color = "red";
+          obj.objetos[dir].dibujar();
+          seleccion_objeto = dir;
+          seleccion_enlace = i;
+        }
+        else {
+          obj.objetos[seleccion_objeto].color = "blue";
+          obj.objetos[seleccion_objeto].dibujar();
+          inteligencia.pintarSeleccion(monitor_obj,monitor_objetos,i);
+          obj.objetos[dir].color = "red";
+          obj.objetos[dir].dibujar();
+          seleccion_objeto = dir;
+          seleccion_enlace = i;
+        }
+      }
     }
 
   }
@@ -79,7 +94,7 @@ function Oyente(canvas) {
   }
 
   this.apretarTecla = function(event) {
-    // console.log(event.keyCode);
+    console.log(event.keyCode);
     // tecla: l
     if(event.keyCode==76) {
       self.tecla = 76;
@@ -101,6 +116,24 @@ function Oyente(canvas) {
         monitor_obj.dibujarTodo();
         obj.dibujarTodo();
       }
+      else if(seleccion_objeto != -1) {
+        obj.objetos[seleccion_objeto].color = "blue";
+        obj.objetos[seleccion_objeto].dibujar();
+
+        tablero.limpiar();
+        monitor_obj.dibujarTodo();
+        obj.dibujarTodo();
+      }
+    }
+    // tecla: Del
+    else if(event.keyCode==46) {
+      obj.eliminar(obj.objetos[seleccion_objeto + 1]);
+      obj.eliminar(obj.objetos[seleccion_objeto]);
+      obj.eliminar(obj.objetos[seleccion_objeto - 1]);
+
+      tablero.limpiar();
+      monitor_obj.dibujarTodo();
+      obj.dibujarTodo();
     }
   }
 }
