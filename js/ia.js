@@ -72,11 +72,12 @@ function IA() {
       l.establecerAltura(clicky - l.obtenerPI().obtenerY());
       establecido = true;
     }
-
+    // Creacion del Enlace.
     if(establecido) {
       var c = new Circulo(cvs,3,new Punto(cvs, clickx, clicky));
       c.color = "red";
       coleccion.insertar(c);
+      
       c = coleccion.objetos[coleccion.cant - 1];
 
       coleccion_monitor.insertar(enlace_obj.crearEnlace(l));

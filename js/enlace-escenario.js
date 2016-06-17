@@ -21,5 +21,9 @@ function enlaceEscenario(cvs,p,i) {
     this.punto.establecerY(this.punto.obtenerY() + 35);
     return new enlaceEscenario(this.ID,p,i);
   }
+  this.equals = function(rect) {
+    return this.rectangulo.equals(rect.rectangulo);
+  }
   this.obtenerPunto = function() { return this.punto;}
+
 }

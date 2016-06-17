@@ -8,7 +8,7 @@ function Coleccion(max) {
   }
 
   this.tipoInstancia = function(obj) {
-    var instancias = [Rectangulo,Punto,Circulo,Linea,Escenario];
+    var instancias = [Rectangulo,Punto,Circulo,Linea,Escenario,enlaceEscenario];
     var encontrado = false;
     var i=0;
 
@@ -25,7 +25,7 @@ function Coleccion(max) {
   }
 
   this.eliminar = function(obj) {
-    var instancias = [Rectangulo,Punto,Circulo,Linea];
+    var instancias = [Rectangulo,Punto,Circulo,Linea,Escenario,enlaceEscenario];
     // Busco que tipo de instancia es.
     var qInstancia = this.tipoInstancia(obj);
     var encontrado = false;
@@ -38,7 +38,12 @@ function Coleccion(max) {
       if(this.objetos[i] instanceof instancias[qInstancia] && this.objetos[i].equals(obj)) {
         encontrado = true;
         var j=i;
+
         while(j+1<this.cant) {
+          if( this.objetos[i] instanceof enlaceEscenario ){
+            var p = new Punto(tablero.ID, this.objetos[j+1].rectangulo.obtenerPI().obtenerX(), this.objetos[j+1].rectangulo.obtenerPI().obtenerY() - (this.objetos[j+1].altura + 5));
+            this.objetos[j+1].rectangulo.establecerPI(p);
+          }
           this.objetos[j] = this.objetos[j+1];
           j++;
         }
@@ -47,7 +52,6 @@ function Coleccion(max) {
       }
       i++;
     }
-    console.log(encontrado);
   }
 
   this.dibujarTodo = function() {
