@@ -1,10 +1,10 @@
-function enlaceEscenario(cvs,p,i) {
+function enlaceEscenario(cvs,i,p) {
   Tablero.call(this,cvs);
 
-  this.punto = p;
+  this.punto = p || new Punto(cvs, 18, 50);;
   this.longitud = 100;
   this.altura = 30;
-  this.rectangulo = new Rectangulo(cvs, p, this.longitud, this.altura);
+  this.rectangulo = new Rectangulo(cvs, this.punto, this.longitud, this.altura);
   this.info = i;
   this.color = "rgb(204,204,204)"
   this.colorSeleccion = "red";
@@ -12,18 +12,15 @@ function enlaceEscenario(cvs,p,i) {
   this.establecerPunto = function(p) {
     this.punto = p;
   }
+
   this.dibujar = function() {
     this.rectangulo.dibujar();
   }
 
-  this.crearEnlace = function(i) {
-    var p = this.punto.clone()
-    this.punto.establecerY(this.punto.obtenerY() + 35);
-    return new enlaceEscenario(this.ID,p,i);
-  }
   this.equals = function(rect) {
     return this.rectangulo.equals(rect.rectangulo);
   }
+
   this.obtenerPunto = function() { return this.punto;}
 
 }

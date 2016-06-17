@@ -93,7 +93,7 @@ function Oyente(canvas) {
   }
 
   this.apretarTecla = function(event) {
-    console.log(event.keyCode);
+    // console.log(event.keyCode);
     // tecla: l
     if(event.keyCode==76) {
       self.tecla = 76;
@@ -130,9 +130,7 @@ function Oyente(canvas) {
       obj.eliminar(obj.objetos[seleccion_objeto]);
       obj.eliminar(obj.objetos[seleccion_objeto - 1]);
 
-      monitor_obj.eliminar(monitor_obj.objetos[seleccion_enlace]);
-      var p = new Punto(tablero.ID, enlace_obj.rectangulo.obtenerPI().obtenerX(), enlace_obj.rectangulo.obtenerPI().obtenerY() - enlace_obj.altura);
-      enlace_obj.punto = p;
+      monitor_obj.eliminar(monitor_obj.objetos[seleccion_enlace]);      
 
       seleccion_objeto = -1;
       seleccion_enlace = -1;

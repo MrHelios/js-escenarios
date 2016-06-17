@@ -42,6 +42,7 @@ function Coleccion(max) {
         while(j+1<this.cant) {
           if( this.objetos[i] instanceof enlaceEscenario ){
             var p = new Punto(tablero.ID, this.objetos[j+1].rectangulo.obtenerPI().obtenerX(), this.objetos[j+1].rectangulo.obtenerPI().obtenerY() - (this.objetos[j+1].altura + 5));
+            this.objetos[j+1].punto = p;
             this.objetos[j+1].rectangulo.establecerPI(p);
           }
           this.objetos[j] = this.objetos[j+1];

@@ -77,11 +77,21 @@ function IA() {
       var c = new Circulo(cvs,3,new Punto(cvs, clickx, clicky));
       c.color = "red";
       coleccion.insertar(c);
-      
-      c = coleccion.objetos[coleccion.cant - 1];
 
-      coleccion_monitor.insertar(enlace_obj.crearEnlace(l));
-      coleccion_monitor.objetos[coleccion_monitor.cant-1].rectangulo.color = coleccion_monitor.objetos[coleccion_monitor.cant-1].color;
+      c = coleccion_monitor.cant - 1;
+      console.log(c);
+      if(c == -1) {
+        coleccion_monitor.insertar(new enlaceEscenario(cvs, l));
+        coleccion_monitor.objetos[0].rectangulo.color = coleccion_monitor.objetos[0].color;
+      }
+      else {
+        // Agrego el punto del ultimo elemento.
+        coleccion_monitor.insertar(new enlaceEscenario(cvs, l,coleccion_monitor.objetos[c].punto.clone()));
+        // Le sumo 35 px.
+        coleccion_monitor.objetos[c+1].punto.establecerY(coleccion_monitor.objetos[c+1].punto.obtenerY() + 35);
+        coleccion_monitor.objetos[coleccion_monitor.cant-1].rectangulo.color = coleccion_monitor.objetos[coleccion_monitor.cant-1].color;
+      }
+
     }
   }
 
