@@ -7,6 +7,11 @@ function Oyente(canvas) {
   this.tecla = null;
   this.movmousex = 0;
   this.movmousey = 0;
+
+  this.seleccion_objeto = -1;
+  this.seleccion_enlace = -1;
+
+
   // Importante para no perder el scope.
   var self = this;
 
@@ -22,6 +27,11 @@ function Oyente(canvas) {
     document.getElementById(this.ID).addEventListener("mousedown",this.click,false);
   }
 
+  this.deshabilitarSeleccion = function() {
+    this.seleccion_objeto = -1;
+    this.seleccion_enlace = -1;
+  }
+
   this.click = function(event) {
     var u = inteligencia.reubicar(event.x,event.y);
 
@@ -35,7 +45,7 @@ function Oyente(canvas) {
     else if(inteligencia.permitirDibujo(escenario,!self.activo,u.x,u.y)){
       inteligencia.finalizarDibujo(obj,monitor_obj,self.ID,u.x,u.y,self.tecla);
 
-      self.limpiar();
+      tablero.limpiar();
       monitor_obj.dibujarTodo();
       obj.dibujarTodo();
       self.activo = inteligencia.opuesto(self.activo);
@@ -47,21 +57,21 @@ function Oyente(canvas) {
       var dir;
       if(i != -1){
         dir = inteligencia.obtenerObjetoEnlace(monitor_obj,obj,i);
-        if(seleccion_objeto == -1) {
+        if(self.seleccion_objeto == -1) {
           inteligencia.pintarSeleccion(monitor_obj,monitor_objetos,i);
           obj.objetos[dir].color = "red";
           obj.objetos[dir].dibujar();
-          seleccion_objeto = dir;
-          seleccion_enlace = i;
+          self.seleccion_objeto = dir;
+          self.seleccion_enlace = i;
         }
         else {
-          obj.objetos[seleccion_objeto].color = "blue";
-          obj.objetos[seleccion_objeto].dibujar();
+          obj.objetos[self.seleccion_objeto].color = "blue";
+          obj.objetos[self.seleccion_objeto].dibujar();
           inteligencia.pintarSeleccion(monitor_obj,monitor_objetos,i);
           obj.objetos[dir].color = "red";
           obj.objetos[dir].dibujar();
-          seleccion_objeto = dir;
-          seleccion_enlace = i;
+          self.seleccion_objeto = dir;
+          self.seleccion_enlace = i;
         }
       }
     }
@@ -85,7 +95,10 @@ function Oyente(canvas) {
 
       var p = inteligencia.reubicar(self.movmousex,self.movmousey);
       tablero.limpiar();
-      if( escenario.estaEnEscenario(p.x,p.y)) obj.dibujarOpt(p.x/10 - 20,p.y/10 - 20,p.x/10 + 20,p.y/10 + 20);
+      if( escenario.estaEnEscenario(p.x,p.y)) {
+        monitor_obj.dibujarTodo();
+        obj.dibujarOpt(p.x/10 - 20,p.y/10 - 20,p.x/10 + 20,p.y/10 + 20);
+      }
       else {
         monitor_obj.dibujarTodo();
         obj.dibujarTodo();
@@ -116,28 +129,28 @@ function Oyente(canvas) {
         monitor_obj.dibujarTodo();
         obj.dibujarTodo();
       }
-      else if(seleccion_objeto != -1) {
-        obj.objetos[seleccion_objeto].color = "blue";
-        obj.objetos[seleccion_objeto].dibujar();
+      else if(self.seleccion_objeto != -1) {
+        obj.objetos[self.seleccion_objeto].color = "blue";
+        obj.objetos[self.seleccion_objeto].dibujar();
 
         tablero.limpiar();
         monitor_obj.dibujarTodo();
         obj.dibujarTodo();
       }
 
-      seleccion_objeto = -1;
-      seleccion_enlace = -1;
+      self.seleccion_objeto = -1;
+      self.seleccion_enlace = -1;
     }
     // tecla: Del
-    else if(event.keyCode==46 && seleccion_objeto != -1 && seleccion_enlace != -1) {
-      obj.eliminar(obj.objetos[seleccion_objeto + 1]);
-      obj.eliminar(obj.objetos[seleccion_objeto]);
-      obj.eliminar(obj.objetos[seleccion_objeto - 1]);
+    else if(event.keyCode==46 && self.seleccion_objeto != -1 && self.seleccion_enlace != -1) {
+      obj.eliminar(obj.objetos[self.seleccion_objeto + 1]);
+      obj.eliminar(obj.objetos[self.seleccion_objeto]);
+      obj.eliminar(obj.objetos[self.seleccion_objeto - 1]);
 
-      monitor_obj.eliminar(monitor_obj.objetos[seleccion_enlace]);
+      monitor_obj.eliminar(monitor_obj.objetos[self.seleccion_enlace]);
 
-      seleccion_objeto = -1;
-      seleccion_enlace = -1;
+      self.seleccion_objeto = -1;
+      self.seleccion_enlace = -1;
 
       tablero.limpiar();
       monitor_obj.dibujarTodo();

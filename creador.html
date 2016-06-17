@@ -34,18 +34,11 @@
   var activo = false;
   var cvs = "canvas";
   var tablero = new Tablero(cvs);
-  var escenario = new Escenario(cvs);
-  var obj = new coleccionEscenario(25);
-  var seleccion_objeto = -1;
-  var seleccion_enlace = -1;
+  var escenario = new Escenario(cvs,150,60,950,550);
+  var obj = new coleccionEscenario();
 
-  var monitor_objetos = new MenuObjetos(cvs);
-  // Personalizo las medidas del menu.
-  monitor_objetos.establecerFila(138);
-  monitor_objetos.establecerColumna_Inicio(40);
-  monitor_objetos.establecerColumna(800);
-
-  var monitor_obj = new Coleccion(25);
+  var monitor_objetos = new Area(cvs,0,0,138,550);
+  var monitor_obj = new Coleccion();
 
   escenario.establecerGrilla();
   obj.insertar(escenario.obtenerLimites());

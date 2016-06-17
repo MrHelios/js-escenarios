@@ -1,50 +1,37 @@
 
-// Funcion ideada para crear el grillado del escenario.
-function Area(canvas) {
+
+function Area(canvas,xi,yi,xf,yf) {
   Tablero.call(this,canvas);
 
-  this.multiplicador = 10;
-  this.fila_inicio = 1;
-  this.columna_inicio = 1;
-  this.fila = 100;
-  this.columna = 100;
+  this.xi = xi;
+  this.yi = yi;
+  this.xf = xf;
+  this.yf = yf;
 
   this.estaEnEscenario = function(px,py) {
-    var multi = this.multiplicador;
-    return (this.fila_inicio*multi<=px && this.fila*multi>px && this.columna_inicio*multi<=py && this.columna*multi>py)
-  }
-  this.establecerMultiplicador = function(m) {
-    this.multiplicador = m;
-  }
-  this.establecerFila = function(f) {
-    this.fila = f;
-  }
-  this.establecerFila_Inicio = function(f) {
-    this.fila_inicio = f;
-  }
-  this.establecerColumna = function(c) {
-    this.columna = c;
-  }
-  this.establecerColumna_Inicio = function(c) {
-    this.columna_inicio = c;
+    return (this.xi<=px && this.xf>px && this.yi<=py && this.yf>py)
   }
 
-  this.obtenerFila_Inicio = function() { return this.fila_inicio;}
-  this.obtenerColumna_Inicio = function() { return this.columna_inicio;}
-  this.obtenerFila = function() { return this.obtenerLong()/this.multiplicador;}
-  this.obtenerColumna = function() { return this.obtenerAltura()/this.multiplicador;}
-  this.obtenerMultiplicador = function() { return this.multiplicador;}
-
+  this.pintar = function() {
+    var p = new Punto(this.ID, this.xi+5, this.yi+5);
+    var r = new Rectangulo(this.ID, p, this.xf-5, this.yf-5);
+    r.color = "white";
+    r.pintar();
+  }
 }
 
 // Funcion que hereda de Area.
-function Escenario(cvs) {
-  Area.call(this,cvs);
+// Funcion ideada para crear el grillado del escenario.
+function Escenario(cvs,xi,yi,xf,yf,multi) {
+  Area.call(this,cvs,xi,yi,xf,yf);
 
-  this.fila_inicio = 15;
-  this.columna_inicio = 6;
-  this.fila = this.obtenerLong()/this.multiplicador;
-  this.columna = this.obtenerAltura()/this.multiplicador;
+  this.multiplicador = multi || 10;
+  // xi: 15
+  this.fila_inicio = this.xi/this.multiplicador;
+  // yi: 6
+  this.columna_inicio = this.yi/this.multiplicador;
+  this.fila = this.xf/this.multiplicador;
+  this.columna = this.yf/this.multiplicador;
 
   var p = new Punto(this.ID,(this.fila_inicio-1)*10,(this.columna_inicio-1)*10);
   var l = ((this.fila-this.fila_inicio)*this.multiplicador);
@@ -93,20 +80,4 @@ function Escenario(cvs) {
 
   this.obtenerPos = function(i,j) { return this.grilla[i][j];}
   this.obtenerLimites = function() { return this.limites;}
-}
-
-// Funcion que herada de Area.
-function MenuObjetos(cvs) {
-  Area.call(this,cvs);
-
-  this.estaEnEscenario = function(px,py) {
-    return (this.fila_inicio<=px && this.fila>px && this.columna_inicio<=py && this.columna>py)
-  }
-  this.pintar = function() {
-    var p = new Punto(this.ID,this.fila_inicio,this.columna_inicio);
-    var r = new Rectangulo(this.ID,p,this.fila,this.columna);
-    r.color = "white";
-    r.pintar();
-  }
-
 }
