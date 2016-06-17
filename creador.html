@@ -28,11 +28,7 @@
   <script src="js/coleccion.js"></script>
   <script src="js/rectangulo.js"></script>
   <script src="js/area.js"></script>
-  <script src="js/menu-objetos.js"></script>
-  <script src="js/escenario.js"></script>
-
-  <script src="js/coleccion-escenario.js"></script>
-  <script src="js/enlace-escenario.js"></script>
+  <script src="js/enlace.js"></script>
 
   <script type="text/javascript">
   var activo = false;
@@ -50,9 +46,6 @@
   monitor_objetos.establecerColumna(800);
 
   var monitor_obj = new Coleccion(25);
-
-  var p = new Punto(cvs, monitor_objetos.obtenerFila_Inicio() + 10, monitor_objetos.obtenerColumna_Inicio() + 10);
-  var enlace_obj = new enlaceEscenario(cvs,p)
 
   escenario.establecerGrilla();
   obj.insertar(escenario.obtenerLimites());

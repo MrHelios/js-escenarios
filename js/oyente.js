@@ -1,4 +1,6 @@
-// Agregar Herencia de Tablero.
+
+// Funcion que sirve para detectar movimiento y click del mouse
+// Tambien detecta movimiento del teclado.
 function Oyente(canvas) {
   Tablero.call(this,canvas);
   this.activo = false;
@@ -7,7 +9,6 @@ function Oyente(canvas) {
   this.movmousey = 0;
   // Importante para no perder el scope.
   var self = this;
-
 
   this.escucharTeclado = function() {
     window.addEventListener("keydown",this.apretarTecla,false);
@@ -123,14 +124,17 @@ function Oyente(canvas) {
         monitor_obj.dibujarTodo();
         obj.dibujarTodo();
       }
+
+      seleccion_objeto = -1;
+      seleccion_enlace = -1;
     }
     // tecla: Del
-    else if(event.keyCode==46) {
+    else if(event.keyCode==46 && seleccion_objeto != -1 && seleccion_enlace != -1) {
       obj.eliminar(obj.objetos[seleccion_objeto + 1]);
       obj.eliminar(obj.objetos[seleccion_objeto]);
       obj.eliminar(obj.objetos[seleccion_objeto - 1]);
 
-      monitor_obj.eliminar(monitor_obj.objetos[seleccion_enlace]);      
+      monitor_obj.eliminar(monitor_obj.objetos[seleccion_enlace]);
 
       seleccion_objeto = -1;
       seleccion_enlace = -1;

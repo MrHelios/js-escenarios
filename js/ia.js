@@ -82,16 +82,15 @@ function IA() {
       console.log(c);
       if(c == -1) {
         coleccion_monitor.insertar(new enlaceEscenario(cvs, l));
-        coleccion_monitor.objetos[0].rectangulo.color = coleccion_monitor.objetos[0].color;
+        coleccion_monitor.objetos[0].colorActual = coleccion_monitor.objetos[0].color;
       }
       else {
         // Agrego el punto del ultimo elemento.
         coleccion_monitor.insertar(new enlaceEscenario(cvs, l,coleccion_monitor.objetos[c].punto.clone()));
         // Le sumo 35 px.
         coleccion_monitor.objetos[c+1].punto.establecerY(coleccion_monitor.objetos[c+1].punto.obtenerY() + 35);
-        coleccion_monitor.objetos[coleccion_monitor.cant-1].rectangulo.color = coleccion_monitor.objetos[coleccion_monitor.cant-1].color;
+        coleccion_monitor.objetos[coleccion_monitor.cant-1].colorActual = coleccion_monitor.objetos[coleccion_monitor.cant-1].color;
       }
-
     }
   }
 
@@ -101,10 +100,10 @@ function IA() {
     var px = x, py = y;
 
     while(i<coleccion.cant && !encontrado) {
-      var pix = coleccion.objetos[i].rectangulo.obtenerPI().obtenerX();
-      var piy = coleccion.objetos[i].rectangulo.obtenerPI().obtenerY();
-      var pfx = coleccion.objetos[i].rectangulo.obtenerLongitud() + pix;
-      var pfy = coleccion.objetos[i].rectangulo.obtenerAltura() + piy;
+      var pix = coleccion.objetos[i].punto.obtenerX();
+      var piy = coleccion.objetos[i].punto.obtenerY();
+      var pfx = coleccion.objetos[i].longitud + pix;
+      var pfy = coleccion.objetos[i].altura + piy;
       if (pix<=px && pfx>px && piy<=py && pfy>py) encontrado = true;
       else i++;
     }
@@ -127,10 +126,10 @@ function IA() {
   }
 
   this.pintarSeleccion = function(coleccion,monitor,i) {
-    coleccion.objetos[i].rectangulo.color = coleccion.objetos[i].colorSeleccion;
+    coleccion.objetos[i].colorActual = coleccion.objetos[i].colorSeleccion;
     monitor.pintar();
     coleccion.dibujarTodo();
-    coleccion.objetos[i].rectangulo.color = coleccion.objetos[i].color;
+    coleccion.objetos[i].colorActual = coleccion.objetos[i].color;
   }
 
 }

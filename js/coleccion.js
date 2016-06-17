@@ -1,9 +1,10 @@
-function Coleccion(max) {
-  this.objetos = new Array(max);
+// Funcion basica para trabajar con arreglos.
+function Coleccion() {
+  this.objetos = new Array();
   this.cant=0;
 
   this.insertar = function(o) {
-    this.objetos[this.cant] = o;
+    this.objetos.push(o);
     this.cant++;
   }
 
@@ -36,19 +37,18 @@ function Coleccion(max) {
     // Luego busco el objeto.
     while(i<this.cant && !encontrado) {
       if(this.objetos[i] instanceof instancias[qInstancia] && this.objetos[i].equals(obj)) {
+        // this.objetos.pop(obj);
         encontrado = true;
-        var j=i;
 
+        var j=i;
         while(j+1<this.cant) {
           if( this.objetos[i] instanceof enlaceEscenario ){
-            var p = new Punto(tablero.ID, this.objetos[j+1].rectangulo.obtenerPI().obtenerX(), this.objetos[j+1].rectangulo.obtenerPI().obtenerY() - (this.objetos[j+1].altura + 5));
-            this.objetos[j+1].punto = p;
-            this.objetos[j+1].rectangulo.establecerPI(p);
+            this.objetos[j+1].punto = new Punto(tablero.ID, this.objetos[j+1].punto.obtenerX(), this.objetos[j+1].punto.obtenerY() - (this.objetos[j+1].altura + 5));
           }
           this.objetos[j] = this.objetos[j+1];
           j++;
         }
-        this.objetos[j] = null;
+        this.objetos.pop();
         this.cant--;
       }
       i++;
@@ -57,6 +57,23 @@ function Coleccion(max) {
 
   this.dibujarTodo = function() {
     var i=0;
+    while(i<this.cant) {
+      this.objetos[i].dibujar();
+      i++;
+    }
+  }
+
+}
+
+// Esta funcion hereda de Coleccion.
+function coleccionEscenario() {
+  Coleccion.call(this);
+
+  // Dibuja parte del grillado.
+  this.dibujarOpt = function(i0,j0,ifinal,jfinal) {
+    this.objetos[0].dibujar();
+    this.objetos[1].dibujarParte(i0,j0,ifinal,jfinal);
+    var i=2;
     while(i<this.cant) {
       this.objetos[i].dibujar();
       i++;
